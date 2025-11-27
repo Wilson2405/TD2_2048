@@ -25,17 +25,17 @@ class Grille
     private:
         int taille_;
         std::vector<std::vector<Tuile>> matrice_;
-        void decalageDroite_();
-        void decalageGauche_();
-        void decalageHaut_();
-        void decalageBas_();
+        void decalageDroite_(int& score);
+        void decalageGauche_(int& score);
+        void decalageHaut_(int& score);
+        void decalageBas_(int& score);
 
     public:
         Grille(int n=4);
         int taille() const;
         const Tuile& tuile(int i, int j) const;
         void ajoutTuile();
-        void decalage(std::string n);
+        void decalage(std::string n, int& score);
         bool estRemplie() const;
         bool estFinie() const;
 };

@@ -77,7 +77,7 @@ void Grille::ajoutTuile(){
     matrice_[x][y].update();
 }
 
-void Grille::decalageGauche_(){
+void Grille::decalageGauche_(int& score){
     int i, j, x;
     Tuile v;
     for (i = 0; i < taille_; i++) {
@@ -89,6 +89,7 @@ void Grille::decalageGauche_(){
                 matrice_[i][x] = v;
                 if (x != 0) {
                     if (v == matrice_[i][x - 1]) {
+                        score++;
                         matrice_[i][x].vider();
                         v.update();
                         matrice_[i][x - 1] = v;
@@ -101,7 +102,7 @@ void Grille::decalageGauche_(){
     }
 }
 
-void Grille::decalageDroite_(){
+void Grille::decalageDroite_(int& score){
     int i, j, x;
     Tuile v;
     for(i = 0; i < taille_; i++){
@@ -113,6 +114,7 @@ void Grille::decalageDroite_(){
                 matrice_[i][x] = v;
                 if (x != taille_-1) {
                     if (v == matrice_[i][x + 1]) {
+                        score++;
                         matrice_[i][x].vider();
                         v.update();
                         matrice_[i][x + 1] = v;
@@ -125,7 +127,7 @@ void Grille::decalageDroite_(){
     }
 }
 
-void Grille::decalageBas_() {
+void Grille::decalageBas_(int& score) {
     int i, j, x;
     Tuile v;
     for(j = 0; j < taille_; j++){
@@ -137,6 +139,7 @@ void Grille::decalageBas_() {
                 matrice_[x][j] = v;
                 if(x != taille_-1){
                     if(v == matrice_[x + 1][j]){
+                        score++;
                         matrice_[x][j].vider();
                         v.update();
                         matrice_[x + 1][j] = v;
@@ -149,7 +152,7 @@ void Grille::decalageBas_() {
     }
 }
 
-void Grille::decalageHaut_(){
+void Grille::decalageHaut_(int& score){
     int i, j, x;
     Tuile v;
     for(j = 0; j < taille_; j++){
@@ -161,6 +164,7 @@ void Grille::decalageHaut_(){
                 matrice_[x][j] = v;
                 if(x != 0){
                     if(v == matrice_[x - 1][j]){
+                        score++;
                         matrice_[x][j].vider();
                         v.update();
                         matrice_[x - 1][j] = v;
@@ -173,12 +177,12 @@ void Grille::decalageHaut_(){
     }
 }
 
-void Grille::decalage(std::string n)
+void Grille::decalage(std::string n, int& score)
 {
-    if(n == "2") decalageBas_();
-    if(n == "4") decalageGauche_();
-    if(n == "6") decalageDroite_();
-    if(n == "8") decalageHaut_();
+    if(n == "2") decalageBas_(score);
+    if(n == "4") decalageGauche_(score);
+    if(n == "6") decalageDroite_(score);
+    if(n == "8") decalageHaut_(score);
 }
 
 bool Grille::estRemplie() const
