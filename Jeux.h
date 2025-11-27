@@ -1,9 +1,10 @@
 #ifndef JEUX_H
 #define JEUX_H
-#include "Grille.h"
-#include "Affichage.h"
-#include <iostream>
+#include"Grille.h"
+#include"Affichage.h"
+#include<iostream>
 #include<stdexcept>
+#include<fstream>
 
 
 class Jeux
@@ -14,8 +15,10 @@ class Jeux
         int score_;
         bool newHighScore_() const;
         std::string menu_() const;
+        int load_() const;
+        void save_() const;
     public:
-        Jeux(Grille g, int highscore = 0);
+        Jeux(Grille g);
         
         void start();
         

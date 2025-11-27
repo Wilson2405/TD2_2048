@@ -1,11 +1,31 @@
 #include "Jeux.h"
 
-Jeux::Jeux(Grille g, int highscore)
-: g_(g), highscore_(highscore), score_(0)
+Jeux::Jeux(Grille g)
+: g_(g), score_(0)
 {
+    highscore_ = load_();
     if(highscore_ < 0)
         throw std::invalid_argument("Highscore must be positive");
 }
+
+int Jeux::load_() const
+{
+    std::ifstream file("highscore.txt");
+    if (!file.is_open()) {
+        // Si le fichier n’existe pas encore : highscore = 0
+        return 0;
+    }
+
+    int highscore;
+    file >> highscore;
+
+    if (file.fail()) return 0; // Fichier vide ou mal formaté → 0
+
+    return highscore;
+}
+
+
+
 std::string Jeux::menu_() const
 {
     std::cout <<"Pour aller en bas, taper 2.        |\n"
@@ -23,8 +43,20 @@ std::string Jeux::menu_() const
 
 bool Jeux::newHighScore_() const
 {
-    if(score_ > highscore_) return true;
-    else return false;
+    return(score_ > highscore_);
+}
+
+
+void Jeux::save_() const
+{
+     std::ofstream file("highscore.txt", std::ios::trunc);
+
+    if (!file.is_open()) {
+        std::cout << "Impossible d’ouvrir highscore.txt !" << std::endl;
+        return;
+    }
+
+    file << highscore_;
 }
 
 void Jeux::start()
@@ -49,5 +81,6 @@ void Jeux::start()
     if(newHighScore_()){
         std::cout << "Nouveau record : " << score_ << std::endl;
         highscore_ = score_;
+        save_();
     }
 }
