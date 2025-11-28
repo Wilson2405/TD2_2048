@@ -5,7 +5,7 @@
 
 int main(){
     std::srand(std::time(nullptr));  // initialise la graine aléatoire
-    Grille g1(6);
+    Grille g1(5);
     Jeux game(g1);
     game.start();
     std::string answer = "y";

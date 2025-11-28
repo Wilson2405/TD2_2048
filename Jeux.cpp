@@ -89,6 +89,7 @@ void Jeux::start()
 
 void Jeux::restart()
 {
+    g_.clear();
     score_=0;
     start();
 }

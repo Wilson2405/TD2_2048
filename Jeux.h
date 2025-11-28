@@ -22,7 +22,4 @@ class Jeux
         void start();
         void restart();
 };
-
-
-
 #endif
