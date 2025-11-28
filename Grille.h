@@ -14,9 +14,9 @@ class Tuile
         Tuile(int val=0);
         int val() const;
         void update();
-        void vider();
-        bool estVide();
-        bool estValide();
+        void clear();
+        bool isEmpty();
+        bool isValid();
         bool operator==(const Tuile& other) const;
 };
 
@@ -25,19 +25,20 @@ class Grille
     private:
         int taille_;
         std::vector<std::vector<Tuile>> matrice_;
-        void decalageDroite_(int& score);
-        void decalageGauche_(int& score);
-        void decalageHaut_(int& score);
-        void decalageBas_(int& score);
+        void moveRight_(int& score);
+        void moveLeft_(int& score);
+        void moveUp_(int& score);
+        void moveDown_(int& score);
 
     public:
         Grille(int n=4);
         int taille() const;
         const Tuile& tuile(int i, int j) const;
-        void ajoutTuile();
-        void decalage(std::string n, int& score);
-        bool estRemplie() const;
-        bool estFinie() const;
+        void addTuile();
+        void move(std::string n, int& score);
+        bool isFull() const;
+        bool isFinish() const;
+        void clear();
 };
 
 #endif // GRILLE_H

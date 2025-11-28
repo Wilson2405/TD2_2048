@@ -2,7 +2,7 @@
 
 Tuile::Tuile(int val): val_(val)
 {
-    if(!estValide())
+    if(!isValid())
         throw std::invalid_argument("La tuile n'est pas valide");
 }
 
@@ -19,12 +19,12 @@ void Tuile::update()
         val_ = 2;
 }
 
-void Tuile::vider()
+void Tuile::clear()
 {
     val_ = 0;
 }
 
-bool Tuile::estVide()
+bool Tuile::isEmpty()
 {
     if(val_ == 0)
         return true;
@@ -32,9 +32,9 @@ bool Tuile::estVide()
         return false;
 }
 
-bool Tuile::estValide()
+bool Tuile::isValid()
 {
-    if(estVide()) return true;
+    if(isEmpty()) return true;
     else{
         int test = val_;
         while(test%2 == 0){
@@ -67,30 +67,30 @@ const Tuile& Grille::tuile(int i, int j) const
     return matrice_[i][j];
 }
 
-void Grille::ajoutTuile(){
+void Grille::addTuile(){
     int x = randint(0, taille_-1);
     int y = randint(0, taille_-1);
-    while(!matrice_[x][y].estVide()){
+    while(!matrice_[x][y].isEmpty()){
         x = randint(0, taille_-1);
         y = randint(0, taille_-1);
     }
     matrice_[x][y].update();
 }
 
-void Grille::decalageGauche_(int& score){
+void Grille::moveLeft_(int& score){
     int i, j, x;
     Tuile v;
     for (i = 0; i < taille_; i++) {
         x = 0;
         for (j = 0; j < taille_; j++) {
             v = matrice_[i][j];
-            if (!v.estVide()) {
-                matrice_[i][j].vider();
+            if (!v.isEmpty()) {
+                matrice_[i][j].clear();
                 matrice_[i][x] = v;
                 if (x != 0) {
                     if (v == matrice_[i][x - 1]) {
                         score++;
-                        matrice_[i][x].vider();
+                        matrice_[i][x].clear();
                         v.update();
                         matrice_[i][x - 1] = v;
                         x--;
@@ -102,20 +102,20 @@ void Grille::decalageGauche_(int& score){
     }
 }
 
-void Grille::decalageDroite_(int& score){
+void Grille::moveRight_(int& score){
     int i, j, x;
     Tuile v;
     for(i = 0; i < taille_; i++){
         x = taille_-1;
         for(j = taille_-1; j >= 0; j--){
             v = matrice_[i][j];
-            if (!v.estVide()) {
-                matrice_[i][j].vider();
+            if (!v.isEmpty()) {
+                matrice_[i][j].clear();
                 matrice_[i][x] = v;
                 if (x != taille_-1) {
                     if (v == matrice_[i][x + 1]) {
                         score++;
-                        matrice_[i][x].vider();
+                        matrice_[i][x].clear();
                         v.update();
                         matrice_[i][x + 1] = v;
                         x++;
@@ -127,20 +127,20 @@ void Grille::decalageDroite_(int& score){
     }
 }
 
-void Grille::decalageBas_(int& score) {
+void Grille::moveDown_(int& score) {
     int i, j, x;
     Tuile v;
     for(j = 0; j < taille_; j++){
         x = taille_-1;
         for(i = taille_-1; i >= 0; i--){
             v = matrice_[i][j];
-            if (!v.estVide()) {
-                matrice_[i][j].vider();
+            if (!v.isEmpty()) {
+                matrice_[i][j].clear();
                 matrice_[x][j] = v;
                 if(x != taille_-1){
                     if(v == matrice_[x + 1][j]){
                         score++;
-                        matrice_[x][j].vider();
+                        matrice_[x][j].clear();
                         v.update();
                         matrice_[x + 1][j] = v;
                         x++;
@@ -152,20 +152,20 @@ void Grille::decalageBas_(int& score) {
     }
 }
 
-void Grille::decalageHaut_(int& score){
+void Grille::moveUp_(int& score){
     int i, j, x;
     Tuile v;
     for(j = 0; j < taille_; j++){
         x = 0;
         for(i = 0; i < taille_; i++){
             v = matrice_[i][j];
-            if(!v.estVide()){
-                matrice_[i][j].vider();
+            if(!v.isEmpty()){
+                matrice_[i][j].clear();
                 matrice_[x][j] = v;
                 if(x != 0){
                     if(v == matrice_[x - 1][j]){
                         score++;
-                        matrice_[x][j].vider();
+                        matrice_[x][j].clear();
                         v.update();
                         matrice_[x - 1][j] = v;
                         x--;
@@ -177,28 +177,28 @@ void Grille::decalageHaut_(int& score){
     }
 }
 
-void Grille::decalage(std::string n, int& score)
+void Grille::move(std::string n, int& score)
 {
-    if(n == "2") decalageBas_(score);
-    if(n == "4") decalageGauche_(score);
-    if(n == "6") decalageDroite_(score);
-    if(n == "8") decalageHaut_(score);
+    if(n == "2") moveDown_(score);
+    if(n == "4") moveLeft_(score);
+    if(n == "6") moveRight_(score);
+    if(n == "8") moveUp_(score);
 }
 
-bool Grille::estRemplie() const
+bool Grille::isFull() const
 {
     int nbremplie=0;
     for(int i = 0; i < taille_; i++){
         for(int j = 0; j< taille_; j++){
             Tuile v = matrice_[i][j];
-            if(!v.estVide()) nbremplie++;
+            if(!v.isEmpty()) nbremplie++;
         }
     }
     if(nbremplie == taille_*taille_) return true;
     else return false;
 }
 
-bool Grille::estFinie() const 
+bool Grille::isFinish() const 
 {
     for(int i = 0; i < taille_; i++){
         for(int j = 0; j< taille_; j++){
@@ -207,4 +207,13 @@ bool Grille::estFinie() const
         }
     }
     return false;
+}
+
+void Grille::clear()
+{
+    for(int i=0; i<taille_; i++){
+        for(int j=0; j<taille_; j++){
+            matrice_[i][j].clear();
+        }
+    }
 }

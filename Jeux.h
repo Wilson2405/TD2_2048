@@ -14,17 +14,13 @@ class Jeux
         int highscore_;
         int score_;
         bool newHighScore_() const;
-        std::string menu_() const;
+        std::string menu_(int deplacement) const;
         int load_() const;
         void save_() const;
     public:
         Jeux(Grille g);
-        
         void start();
-        
-
-
-
+        void restart();
 };
 
 
