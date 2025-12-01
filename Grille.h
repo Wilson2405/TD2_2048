@@ -23,7 +23,7 @@ class Tuile
 class Grille
 {
     private:
-        int taille_;
+        int size_;
         std::vector<std::vector<Tuile>> matrice_;
         void moveRight_(int& score);
         void moveLeft_(int& score);
@@ -32,11 +32,12 @@ class Grille
 
     public:
         Grille(int n=4);
-        int taille() const;
+        int size() const;
         const Tuile& tuile(int i, int j) const;
         void addTuile();
         void move(std::string n, int& score);
         bool isFull() const;
+        bool canFusion() const;
         bool isFinish() const;
         void clear();
 };

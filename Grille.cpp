@@ -50,16 +50,16 @@ bool Tuile::operator==(const Tuile& other) const
     return val_ == other.val_;
 }
 
-Grille::Grille(int n) : taille_(n), matrice_(taille_, std::vector<Tuile>(taille_))
+Grille::Grille(int n) : size_(n), matrice_(size_, std::vector<Tuile>(size_))
 {
-    if(taille_ <= 3) {
-        throw std::invalid_argument("La taille de la grille est trop petite!");
+    if(size_ <= 3) {
+        throw std::invalid_argument("The grid size is too small!");
     }
 }
 
-int Grille::taille() const
+int Grille::size() const
 {
-    return taille_;
+    return size_;
 }
 
 const Tuile& Grille::tuile(int i, int j) const
@@ -68,11 +68,11 @@ const Tuile& Grille::tuile(int i, int j) const
 }
 
 void Grille::addTuile(){
-    int x = randint(0, taille_-1);
-    int y = randint(0, taille_-1);
+    int x = randint(0, size_-1);
+    int y = randint(0, size_-1);
     while(!matrice_[x][y].isEmpty()){
-        x = randint(0, taille_-1);
-        y = randint(0, taille_-1);
+        x = randint(0, size_-1);
+        y = randint(0, size_-1);
     }
     matrice_[x][y].update();
 }
@@ -80,9 +80,9 @@ void Grille::addTuile(){
 void Grille::moveLeft_(int& score){
     int i, j, x;
     Tuile v;
-    for (i = 0; i < taille_; i++) {
+    for (i = 0; i < size_; i++) {
         x = 0;
-        for (j = 0; j < taille_; j++) {
+        for (j = 0; j < size_; j++) {
             v = matrice_[i][j];
             if (!v.isEmpty()) {
                 matrice_[i][j].clear();
@@ -105,14 +105,14 @@ void Grille::moveLeft_(int& score){
 void Grille::moveRight_(int& score){
     int i, j, x;
     Tuile v;
-    for(i = 0; i < taille_; i++){
-        x = taille_-1;
-        for(j = taille_-1; j >= 0; j--){
+    for(i = 0; i < size_; i++){
+        x = size_-1;
+        for(j = size_-1; j >= 0; j--){
             v = matrice_[i][j];
             if (!v.isEmpty()) {
                 matrice_[i][j].clear();
                 matrice_[i][x] = v;
-                if (x != taille_-1) {
+                if (x != size_-1) {
                     if (v == matrice_[i][x + 1]) {
                         score++;
                         matrice_[i][x].clear();
@@ -130,14 +130,14 @@ void Grille::moveRight_(int& score){
 void Grille::moveDown_(int& score) {
     int i, j, x;
     Tuile v;
-    for(j = 0; j < taille_; j++){
-        x = taille_-1;
-        for(i = taille_-1; i >= 0; i--){
+    for(j = 0; j < size_; j++){
+        x = size_-1;
+        for(i = size_-1; i >= 0; i--){
             v = matrice_[i][j];
             if (!v.isEmpty()) {
                 matrice_[i][j].clear();
                 matrice_[x][j] = v;
-                if(x != taille_-1){
+                if(x != size_-1){
                     if(v == matrice_[x + 1][j]){
                         score++;
                         matrice_[x][j].clear();
@@ -155,9 +155,9 @@ void Grille::moveDown_(int& score) {
 void Grille::moveUp_(int& score){
     int i, j, x;
     Tuile v;
-    for(j = 0; j < taille_; j++){
+    for(j = 0; j < size_; j++){
         x = 0;
-        for(i = 0; i < taille_; i++){
+        for(i = 0; i < size_; i++){
             v = matrice_[i][j];
             if(!v.isEmpty()){
                 matrice_[i][j].clear();
@@ -188,20 +188,20 @@ void Grille::move(std::string n, int& score)
 bool Grille::isFull() const
 {
     int nbremplie=0;
-    for(int i = 0; i < taille_; i++){
-        for(int j = 0; j< taille_; j++){
+    for(int i = 0; i < size_; i++){
+        for(int j = 0; j< size_; j++){
             Tuile v = matrice_[i][j];
             if(!v.isEmpty()) nbremplie++;
         }
     }
-    if(nbremplie == taille_*taille_) return true;
+    if(nbremplie == size_*size_) return true;
     else return false;
 }
 
 bool Grille::isFinish() const 
 {
-    for(int i = 0; i < taille_; i++){
-        for(int j = 0; j< taille_; j++){
+    for(int i = 0; i < size_; i++){
+        for(int j = 0; j< size_; j++){
             Tuile v = matrice_[i][j];
             if(v.val() == 2048) return true;
         }
@@ -211,9 +211,27 @@ bool Grille::isFinish() const
 
 void Grille::clear()
 {
-    for(int i=0; i<taille_; i++){
-        for(int j=0; j<taille_; j++){
+    for(int i=0; i<size_; i++){
+        for(int j=0; j<size_; j++){
             matrice_[i][j].clear();
         }
     }
+}
+
+bool Grille::canFusion() const {
+    for (int i = 0; i < size_; i++) {
+        for (int j = 0; j < size_; j++) {
+            // Comparer avec la tuile à droite
+            if (j + 1 < size_) {
+                if (matrice_[i][j] == matrice_[i][j + 1])
+                    return true;
+            }
+            // Comparer avec la tuile en bas
+            if (i + 1 < size_) {
+                if (matrice_[i][j] == matrice_[i + 1][j])
+                    return true;
+            }
+        }
+    }
+    return false;
 }

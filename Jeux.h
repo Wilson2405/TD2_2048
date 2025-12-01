@@ -17,6 +17,7 @@ class Jeux
         std::string menu_(int deplacement) const;
         int load_() const;
         void save_() const;
+        bool GameOver_() const;
     public:
         Jeux(Grille g);
         void start();

@@ -59,6 +59,14 @@ void Jeux::save_() const
     file << highscore_;
 }
 
+bool Jeux::GameOver_() const
+{
+    if(g_.isFull()){
+        if(!g_.canFusion()) return true;
+    }
+    return false;
+}
+
 void Jeux::start()
 {
     std::cout << "Bienvenue dans le jeux du 2048. Voici la grille de jeux:\n";
@@ -66,7 +74,7 @@ void Jeux::start()
     g_.addTuile();
     std::string q = "";
     int nb_deplacement=0;
-    while(!g_.isFull() && !g_.isFinish() && q != "5"){
+    while(!GameOver_() && !g_.isFinish() && q != "5"){
         std::cout << to_string(g_) << std::endl;
         q = menu_(nb_deplacement);
         g_.move(q, score_);
@@ -75,7 +83,7 @@ void Jeux::start()
     }
     if(q == "5")
     std::cout << "Vous avez décidé de quitter la partie." << std::endl;
-    if(g_.isFull())
+    if(GameOver_())
     std::cout << "GAME OVER: La grille est remplie!" << std::endl;
     if(g_.isFinish())
     std::cout << to_string(g_) << "\nFélicitation !! Vous avez terminé la grille " 
