@@ -18,7 +18,7 @@ std::string to_string(const Tuile& t)
 std::string to_string(const  Grille& g)
 {
     std::string m="";
-    int n = g.taille();
+    int n = g.size();
     for(int i = 0; i < n; i++ ){
         for(int k = 0; k < n; k++){
             m+="+-----";

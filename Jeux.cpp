@@ -87,7 +87,7 @@ void Jeux::start()
     std::cout << "GAME OVER: La grille est remplie!" << std::endl;
     if(g_.isFinish())
     std::cout << to_string(g_) << "\nFélicitation !! Vous avez terminé la grille " 
-            << g_.taille() <<" x " << g_.taille() <<".\n";
+            << g_.size() <<" x " << g_.size() <<".\n";
     if(newHighScore_()){
         std::cout << "Nouveau record : " << score_ << std::endl;
         highscore_ = score_;
