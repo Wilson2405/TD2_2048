@@ -3,7 +3,7 @@
 Tuile::Tuile(int val): val_(val)
 {
     if(!isValid())
-        throw std::invalid_argument("La tuile n'est pas valide");
+        throw std::invalid_argument("The tile is invalid");
 }
 
 int Tuile::val() const

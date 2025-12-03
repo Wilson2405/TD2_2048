@@ -10,7 +10,7 @@ int main(){
     game.start();
     std::string answer = "y";
     while(answer != "n" && answer != "N" && answer != "no" && answer != "" ){
-        std::cout << "Nouvelle partie?[y/N] ";
+        std::cout << "Nouvelle partie?[y/n] ";
         std::cin >> answer;
         if(answer == "y" || answer == "yes" || answer == "Y")
             game.restart();
