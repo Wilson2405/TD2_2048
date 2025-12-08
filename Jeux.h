@@ -1,7 +1,6 @@
 #ifndef JEUX_H
 #define JEUX_H
 #include"Grille.h"
-#include"Affichage.h"
 #include<iostream>
 #include<stdexcept>
 #include<fstream>

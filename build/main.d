@@ -1,1 +1,1 @@
-build/main.o: main.cpp Grille.h Randint.h Affichage.h Jeux.h
+build/main.o: main.cpp Grille.h Randint.h Jeux.h

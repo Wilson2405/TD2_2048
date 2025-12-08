@@ -1,10 +1,9 @@
 #include"Grille.h"
-#include"Affichage.h"
-#include "Randint.h"
+#include"Randint.h"
 #include"Jeux.h"
 
 int main(){
-    std::srand(std::time(nullptr));  // initialise la graine aléatoire
+    std::srand(std::time(nullptr));
     Grille g1(5);
     Jeux game(g1);
     game.start();

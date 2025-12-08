@@ -5,6 +5,8 @@
 #include<string>
 #include<vector>
 #include<stdexcept>
+#include <sstream>
+#include <iomanip>
 
 class Tuile 
 {
@@ -41,6 +43,13 @@ class Grille
         bool isFinish() const;
         void clear();
 };
+
+
+
+//Free function
+
+std::string to_string(const Tuile& t);
+std::string to_string(const Grille& g);
 
 #endif // GRILLE_H
 

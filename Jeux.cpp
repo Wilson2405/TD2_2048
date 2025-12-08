@@ -10,7 +10,7 @@ Jeux::Jeux(Grille g)
 
 int Jeux::load_() const
 {
-    std::ifstream file("highscore.txt");
+    std::ifstream file("save/highscore.txt");
     if (!file.is_open()) {
         // Si le fichier n’existe pas encore : highscore = 0
         return 0;
@@ -49,7 +49,7 @@ bool Jeux::newHighScore_() const
 
 void Jeux::save_() const
 {
-     std::ofstream file("highscore.txt", std::ios::trunc);
+     std::ofstream file("save/highscore.txt", std::ios::trunc);
 
     if (!file.is_open()) {
         std::cout << "Impossible d’ouvrir highscore.txt !" << std::endl;
