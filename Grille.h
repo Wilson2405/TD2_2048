@@ -6,7 +6,7 @@
 #include<vector>
 #include<stdexcept>
 #include <sstream>
-#include <iomanip>
+#include <ostream>
 
 class Tuile 
 {
@@ -42,14 +42,13 @@ class Grille
         bool canFusion() const;
         bool isFinish() const;
         void clear();
+        friend std::ostream& operator << (std::ostream& os, const Grille& G);
 };
-
-
 
 //Free function
 
 std::string to_string(const Tuile& t);
 std::string to_string(const Grille& g);
 
-#endif // GRILLE_H
+#endif 
 

@@ -24,17 +24,15 @@ int Jeux::load_() const
     return highscore;
 }
 
-
-
 std::string Jeux::menu_(int deplacement) const
 {
     std::cout <<"Pour aller en bas, taper 2.        |\n"
               <<"Pour aller en haut, taper 8.       |Votre score: " << score_ <<"\n"
               <<"Pour aller a gauche, taper 4.      |Record: " << highscore_ << "\n"
               <<"Pour aller a droite, taper 6.      |Deplacements: " << deplacement << "\n"
-              <<"Pour quitter, taper 5.\n";
+              <<"Pour quitter, taper q." << std::endl;
     std::string choix = "";
-    while(choix!="5" && choix!="2" && choix!="4" && choix!="6" && choix!="8"){
+    while(choix!="q" && choix!="2" && choix!="4" && choix!="6" && choix!="8"){
         std::cout << "Votre choix: ";
         std::cin >> choix;
     }
@@ -45,7 +43,6 @@ bool Jeux::newHighScore_() const
 {
     return(score_ > highscore_);
 }
-
 
 void Jeux::save_() const
 {
@@ -74,14 +71,14 @@ void Jeux::start()
     g_.addTuile();
     std::string q = "";
     int nb_deplacement=0;
-    while(!GameOver_() && !g_.isFinish() && q != "5"){
-        std::cout << to_string(g_) << std::endl;
+    while(!GameOver_() && !g_.isFinish() && q != "q"){
+        std::cout << g_ << std::endl;
         q = menu_(nb_deplacement);
         g_.move(q, score_);
         g_.addTuile();
         nb_deplacement++;
     }
-    if(q == "5")
+    if(q == "q")
     std::cout << "Vous avez décidé de quitter la partie." << std::endl;
     if(GameOver_())
     std::cout << "GAME OVER: La grille est remplie!" << std::endl;

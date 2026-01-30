@@ -8,11 +8,12 @@ int main(){
     Jeux game(g1);
     game.start();
     std::string answer = "y";
-    while(answer != "n" && answer != "N" && answer != "no" && answer != "" ){
-        std::cout << "Nouvelle partie?[y/n] ";
+    while(answer == "y" ||answer == "Y" || answer == "yes"){
+        std::cout << "Nouvelle partie?[y/N] ";
         std::cin >> answer;
         if(answer == "y" || answer == "yes" || answer == "Y")
             game.restart();
     }
+    
     return 0;
 }

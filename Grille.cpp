@@ -236,25 +236,33 @@ bool Grille::canFusion() const {
     return false;
 }
 
-
-
-// Free function
-
-#include"Affichage.h"
-
 std::string to_string(const Tuile& t)
-{// setw force à afficher les espaces dans le to_string
-    std::ostringstream oss;
-    oss << "|";
+{
+    std::string m = "|";
     int v = t.val();
     if(v !=0){
-        if(v<10) oss<<std::setw(2)<< " "<<v<<std::setw(2)<< " ";
-        else if (v<100) oss<<std::setw(2)<< " "<<v<<std::setw(1)<< " ";
-        else if (v<1000) oss<<std::setw(1)<< " "<<v<<std::setw(1)<< " ";
-        else oss<<std::setw(1)<< " "<<v;
+        if(v<10) {
+            m+= "  ";
+            m+= std::to_string(v);
+            m+= "  ";
+        }
+        else if (v<100) {
+            m+= "  ";
+            m+= std::to_string(v);
+            m+= " ";
+        }
+        else if (v<1000) {
+            m+= " ";
+            m+= std::to_string(v);
+            m+= " ";
+        } 
+        else {
+            m+= " ";
+            m+= std::to_string(v);
+        }
     }
-    else oss <<std::setw(5)<< " ";
-    return oss.str();
+    else m+="     ";
+    return m;
 }
 
 std::string to_string(const  Grille& g)
@@ -276,6 +284,10 @@ std::string to_string(const  Grille& g)
     }
     m+="+\n";
     return m;
+}
 
-
+std::ostream& operator << (std::ostream& os, const Grille& G)
+{
+    os << to_string(G);
+    return os;
 }

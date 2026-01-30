@@ -1,5 +1,6 @@
-build/
+build\
 *.o
 *.d
-.vscode/
+bin\
+.vscode\
 settings.json
